@@ -1,0 +1,10 @@
+node_modules/
+lib-cov
+.env
+.vscode/
+.DS_Store
+.idea/
+package-lock.json
+app.log
+error.log
+dist/
