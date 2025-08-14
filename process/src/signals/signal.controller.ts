@@ -5,6 +5,8 @@ import { UpdateProcessedXRayDto } from './DTO/update-signal.dto';
 import { ApiTags, ApiOperation, ApiResponse, ApiParam, ApiBody } from '@nestjs/swagger';
 import { FindSignalDto } from './DTO/getOne-signal.dto';
 import { PaginationQueryDto } from './DTO/pagination.dto';
+import { PaginatedResultDto } from './DTO/pagination-meta.dto';
+
 import { Signal } from './signal.schema';
 
 @ApiTags('Signals')
@@ -28,8 +30,8 @@ export class SignalController {
   async findAll(
     @Query('page') page: number = 1,
     @Query('limit') limit: number = 10,
-  ): Promise<PaginationQueryDto> {
-    return this.signalService.findAllWithPagination(page, limit);
+  ): Promise<PaginatedResultDto<Signal>> {
+    return await this.signalService.findAllWithPagination(page, limit);
   }
 
   @Get(':id')

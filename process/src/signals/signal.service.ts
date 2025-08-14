@@ -5,6 +5,8 @@ import { ISignal, Signal } from './signal.schema';
 import { UpdateProcessedXRayDto } from './DTO/update-signal.dto';
 import { CreateProcessedXRayDto } from './DTO/create-signal.dto';
 import { PaginationQueryDto } from './DTO/pagination.dto'
+import { PaginatedResultDto } from './DTO/pagination-meta.dto';
+
 @Injectable()
 export class SignalService {
   constructor(@InjectModel('Signal') private signalModel: Model<ISignal>,
@@ -20,7 +22,12 @@ export class SignalService {
   }
 
 
-  async findAllWithPagination(page: number, limit: number): Promise<any> {
+
+  
+  async findAllWithPagination(
+    page: number, 
+    limit: number
+  ): Promise<PaginatedResultDto<Signal>> { // ✅ Provide the type argument
     const skip = (page - 1) * limit;
   
     const [signals, total] = await Promise.all([
@@ -41,6 +48,7 @@ export class SignalService {
     };
   }
   
+  
   async findOne(id: string): Promise<Signal | null> {
     return this.signalModel.findById(id).exec();
   }
@@ -49,7 +57,7 @@ export class SignalService {
     return this.signalModel.findByIdAndUpdate(id, updateSignalDto, { new: true }).exec();
   }
 
-  async remove(id: string): Promise<any> {
-    return this.signalModel.findByIdAndDelete(id).exec();
+  async remove(id: string): Promise<void> {
+    await this.signalModel.findByIdAndDelete(id).exec();
   }
 }
