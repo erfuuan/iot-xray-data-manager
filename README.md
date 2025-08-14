@@ -65,5 +65,10 @@ Start all services using Docker Compose:
 ```bash
 docker compose up -d
 ```
+rabbitmq credential :
+```bash
+user : myuser
+pass : mypass
+```
 
 Now your services are running! 🎉 🚀
